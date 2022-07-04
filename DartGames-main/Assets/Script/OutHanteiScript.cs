@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OutHanteiScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -20,8 +20,6 @@ public class OutHanteiScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-
-
         if (collision.gameObject.layer == 6)
         {
 
@@ -34,17 +32,8 @@ public class OutHanteiScript : MonoBehaviour
                 collision.gameObject.GetComponent<DartScore>().score = score;
                 ScoreSystem scoreSystem = GameObject.Find("GameController").GetComponent<ScoreSystem>();
                 scoreSystem.ChangePoint(score, multiplier);
-
-                // }
             }
         }
-        else if (collision.gameObject.layer == 8)
-        {
-
-
-
-        }
-    
     }
 
 

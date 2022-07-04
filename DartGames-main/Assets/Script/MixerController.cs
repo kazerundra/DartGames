@@ -101,11 +101,4 @@ public class MixerController : MonoBehaviour
         audioMixer.SetFloat("Master", ConvertToMixer(value));
         PlayerPrefs.SetFloat("Master", value);
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

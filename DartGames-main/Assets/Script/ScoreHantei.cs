@@ -12,8 +12,6 @@ public class ScoreHantei : MonoBehaviour
     private int shineScore=0;
     public void OnTriggerEnter2D(Collider2D collision)
     {
-
-
         if (collision.gameObject.layer== 6)
         {
           

@@ -90,15 +90,8 @@ public class GameController : MonoBehaviour
 
         if (dartStock == 0 || bust==true)
         {
-           
            GetComponent<DartFly>().currentMode = Mode.Wait;
-          
            StartCoroutine(ChangeRound());
-         
-           
-
-
-
         }
         else
         {
@@ -123,7 +116,6 @@ public class GameController : MonoBehaviour
             {
                 ShowFailPanel();
                 isFail = true;
-
             }
         }
         
@@ -169,7 +161,6 @@ public class GameController : MonoBehaviour
         if (!isFail)
         {
             //if suceess go to next round and reset dart to 3
-         
             roundAnimText.GetComponent<RoundAnim>().IsAnimatingOn();
             roundAnimText.gameObject.SetActive(true);
             GetComponent<SoundController>().PlayAudio(4);
@@ -214,8 +205,8 @@ public class GameController : MonoBehaviour
                 break;
             case 3:
                 gameMode = GameMode.Justice;
-                //???????????_??
-                int random = Random.Range(1, 20) *Random.Range(2, 3);
+                //次のターゲットを決める
+                int random = RandomNextTarget();
                 GetComponent<ScoreSystem>().SetStartingPoint(random);
                 break;
         }
@@ -224,28 +215,25 @@ public class GameController : MonoBehaviour
 
     }
 
-    //justice mode random target number
+    //ジャスティスモードランダム値
     public int RandomNextTarget()
     {
-        
         return Random.Range(1, 20) * Random.Range(2, 3);
     }
     
-    //show and unshow next target text(justice mode)
-
+    //次のターゲット表示・非表示
     public IEnumerator ShowNextTarget()
     {
         justReset = true;
         ChangeTargetEffect.SetActive(true);
         yield return new WaitForSeconds(1);
         ChangeTargetEffect.SetActive(false);
-
        yield return StartCoroutine( ChangeRound());
         GetComponent<ScoreSystem>().SetStartingPoint(RandomNextTarget());
         yield return null;
     }
 
-    //show clear panel 
+    //クリアパネル表示
     public void ShowClearPanel()
     {
       
@@ -257,7 +245,7 @@ public class GameController : MonoBehaviour
         GetComponent<SoundController>().PlayAudio(2);
         ShowGameResult();
     }
-    //show result panel depending on mode
+    //モードによって結果を出す
     private void ShowGameResult()
     {
         GetComponent<DartFly>().currentMode = Mode.ShowResult;
@@ -320,23 +308,22 @@ public class GameController : MonoBehaviour
         clearPanel.transform.GetChild(2).GetComponent<Text>().text = ((round - 1) * 3 + dartStock).ToString();
     }
 
-    //show fail panel
+    //失敗パネルを表示する
     public void ShowFailPanel()
     {
         
         clearPanel.transform.GetChild(3).gameObject.SetActive(false);
         clearPanel.transform.GetChild(4).gameObject.SetActive(true);
-        //Debug.Log((round - 1 * 3) + (dartStock));
         ShowGameResult();
     }
 
-    //resetgame button if pushed
+    //リセットボタン押された時
     public void ResetGame()
     {
         StartCoroutine(StartAds());
     }
 
-    //check number of play, if second time show ads video
+    //広告表示
     IEnumerator StartAds()
     {
         if (GetComponent<AdsScript>().GetNoAds())
@@ -344,8 +331,6 @@ public class GameController : MonoBehaviour
             blackscreen.color = new Color32(0, 0, 0, 0);
             yield return StartCoroutine(BlackScreenFade());
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-          
         }
         else
         {
@@ -364,23 +349,13 @@ public class GameController : MonoBehaviour
                 GetComponent<AdsScript>().ShowAd();
                 waitForAds = true;
                 yield return waitForAds;
-                //GetComponent<AdsScript>().LoadBanner();
-
-                
             }
-
-
-
-          
-            
-           
-            
         }
       
     }
 
     
-    //black screen animation
+    //黒い画面アニメーション
     IEnumerator BlackScreenFade()
     {
 
@@ -396,7 +371,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
     }
-    //return to title screen
+    //タイトルに戻る
     public void ToTitle()
     {
         if (!GetComponent<AdsScript>().GetNoAds())
@@ -411,7 +386,7 @@ public class GameController : MonoBehaviour
         Input.multiTouchEnabled=false;
         justReset = false;
         ChangeMode(PlayerPrefs.GetInt("mode"));
-        //prepare ads and banner
+        //広告の準備
         if (!GetComponent<AdsScript>().GetNoAds())
         {
             GetComponent<AdsScript>().InitializeAds();
@@ -420,7 +395,7 @@ public class GameController : MonoBehaviour
 
         }
 
-        //change text to point or score depends on mode
+        //テクスト変更
         if (gameMode== GameMode.Justice)
         {
            // PointScore.GetComponent<PointScoreChange>().ChangeToScore();
@@ -432,13 +407,13 @@ public class GameController : MonoBehaviour
 
     }
 
-    //turn on text effect
+    //テクスト効果オン
     public void PlayTextEffect(int i)
     {
         textEffect.transform.GetChild(i).gameObject.SetActive(true);
 
     }
-    //turn off text effect
+    //テクスト効果オフ
     public void StopTextEffect(int i)
     {
         textEffect.transform.GetChild(i).gameObject.SetActive(false);

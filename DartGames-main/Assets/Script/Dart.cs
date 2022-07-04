@@ -7,8 +7,6 @@ public class Dart : MonoBehaviour
 
     public bool isOnBoard = false;
     public bool clone;
-    
-
     public bool IsOnBoard()
     {
         return isOnBoard;
@@ -20,19 +18,5 @@ public class Dart : MonoBehaviour
         {
             GetComponent<AudioSource>().Play();
         }
-  
-      
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

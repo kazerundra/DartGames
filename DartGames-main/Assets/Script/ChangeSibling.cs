@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class ChangeSibling : MonoBehaviour
 {
-    // Start is called before the first frame update
-    
     public void SetAsLast(GameObject target)
     {
         target.transform.SetSiblingIndex(3);
     }
 
+　　//ハイスコアを表示
     public void LoadHiScore()
     {
         transform.GetChild(0).GetComponentInChildren<Text>().text = PlayerPrefs.GetInt("High301", 0).ToString();
